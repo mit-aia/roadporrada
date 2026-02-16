@@ -1,0 +1,4 @@
+build
+build-cmake
+CmakeUserPresets.json
+vcpkg_installed

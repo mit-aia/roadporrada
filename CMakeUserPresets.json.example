@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "configurePresets": [
+    {
+      "name": "user-env",
+      "hidden": true,
+      "environment": {
+        "VCPKG_ROOT": "C:/vcpkg"
+      }
+    },
+    {
+      "name": "default",
+      "inherits": ["user-env", "vcpkg"] 
+    }
+  ]
+}
