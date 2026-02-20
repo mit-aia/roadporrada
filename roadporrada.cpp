@@ -25,12 +25,12 @@ int main()
 
     bgfx::PlatformData pd;
     pd.nwh = (void *)(uintptr_t)glfwGetWin32Window(window);
-    // bgfx::setPlatformData(pd);
+    bgfx::setPlatformData(pd);
 
     bgfx::Init init;
     init.platformData = pd;
-    // init.type = bgfx::RendererType::Direct3D12; // Try D3D12 first (RTX 4090 supports it)
-    // init.type = bgfx::RendererType::Direct3D11; // Fallback to D3D11
+    // init.type = bgfx::RendererType::Direct3D12;
+    // init.type = bgfx::RendererType::Direct3D11;
     // init.type = bgfx::RendererType::Vulkan;
 
     init.resolution.width = 800;
