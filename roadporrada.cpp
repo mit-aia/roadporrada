@@ -25,12 +25,13 @@ int main()
 
     bgfx::PlatformData pd;
     pd.nwh = (void *)(uintptr_t)glfwGetWin32Window(window);
-    bgfx::setPlatformData(pd);
+    // bgfx::setPlatformData(pd);
 
     bgfx::Init init;
-    init.type = bgfx::RendererType::Direct3D12; // Try D3D12 first (RTX 4090 supports it)
-                                                // init.type = bgfx::RendererType::Direct3D11; // Fallback to D3D11
-                                                // init.type = bgfx::RendererType::Vulkan;
+    init.platformData = pd;
+    // init.type = bgfx::RendererType::Direct3D12; // Try D3D12 first (RTX 4090 supports it)
+    // init.type = bgfx::RendererType::Direct3D11; // Fallback to D3D11
+    // init.type = bgfx::RendererType::Vulkan;
 
     init.resolution.width = 800;
     init.resolution.height = 600;
@@ -43,7 +44,7 @@ int main()
         return 1;
     }
 
-    bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
+    bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
     bgfx::setViewRect(0, 0, 0, 800, 600);
 
     printf("GLFW and bgfx initialized successfully!\n");
@@ -69,30 +70,42 @@ int main()
     return 0;
 }
 
-// // Try different renderers explicitly
-// bgfx::Init init;
-// init.type = bgfx::RendererType::Direct3D12; // Try D3D12 first (RTX 4090 supports it)
-// // init.type = bgfx::RendererType::Direct3D11; // Fallback to D3D11
-// // init.type = bgfx::RendererType::Vulkan;     // Or Vulkan
-// init.resolution.width = 800;
-// init.resolution.height = 600;
-// init.resolution.reset = BGFX_RESET_VSYNC;
-// // Set debug mode to see more info
-// init.debug = true;
-// init.profile = true;
-// printf("Attempting to initialize bgfx with type: %s\n",
-//        bgfx::getRendererName(init.type));
-// if (!bgfx::init(init))
-// {
-//     fprintf(stderr, "Failed to initialize bgfx with renderer: %s\n",
-//             bgfx::getRendererName(init.type));
+// #include "bgfx/bgfx.h"
+// #include <bgfx/platform.h>
+// #include "GLFW/glfw3.h"
+// #define GLFW_EXPOSE_NATIVE_WIN32
+// #include "GLFW/glfw3native.h"
 
-//     // Try again with D3D11 as fallback
-//     init.type = bgfx::RendererType::Direct3D11;
-//     printf("Retrying with D3D11...\n");
-//     if (!bgfx::init(init))
+// #define WNDW_WIDTH 1600
+// #define WNDW_HEIGHT 900
+
+// int main(void)
+// {
+//     glfwInit();
+//     GLFWwindow *window = glfwCreateWindow(WNDW_WIDTH, WNDW_HEIGHT, "Hello, bgfx!", NULL, NULL);
+
+//     bgfx::PlatformData pd;
+//     pd.nwh = glfwGetWin32Window(window);
+//     bgfx::setPlatformData(pd);
+
+//     bgfx::Init bgfxInit;
+//     bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer.
+//     bgfxInit.resolution.width = WNDW_WIDTH;
+//     bgfxInit.resolution.height = WNDW_HEIGHT;
+//     bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
+//     bgfxInit.debug = true; // Enable debug mode for better error messages and debugging features.
+//     bgfxInit.platformData = pd; // Pass the platform data to bgfx initialization.
+//     bgfx::init(bgfxInit);
+
+//     bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
+//     bgfx::setViewRect(0, 0, 0, WNDW_WIDTH, WNDW_HEIGHT);
+
+//     unsigned int counter = 0;
+//     while (true)
 //     {
-//         fprintf(stderr, "Failed to initialize bgfx with D3D11 as well\n");
-//         return 1;
+//         bgfx::frame();
+//         counter++;
 //     }
+
+//     return 0;
 // }
